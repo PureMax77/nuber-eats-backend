@@ -1,16 +1,30 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @ObjectType()
+@Entity()
 export class Restaurant {
-  @Field((type) => String)
+  @Field(() => Number) // graphql 스키마를 위한 부분
+  @PrimaryGeneratedColumn() // 데이터 베이스에 동기화 되기 위한 부분
+  id: number;
+
+  @Field(() => String)
+  @Column()
   name: string;
 
-  @Field((type) => Boolean)
+  @Field(() => Boolean)
+  @Column()
   isVegan: boolean;
 
-  @Field((type) => String)
+  @Field(() => String)
+  @Column()
   address: string;
 
-  @Field((type) => String)
+  @Field(() => String)
+  @Column()
   ownerName: string;
+
+  @Field(() => String)
+  @Column()
+  categoryName: string;
 }
