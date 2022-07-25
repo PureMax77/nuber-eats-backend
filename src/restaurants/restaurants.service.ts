@@ -22,6 +22,6 @@ export class RestaurantService {
     return this.restaurants.save(newRestaurant);
   }
   updateRestaurant({ id, data }: UpdateRestaurantDto) {
-    this.restaurants.update(id, { ...data });
+    return this.restaurants.update(id, { ...data });
   }
 }
