@@ -4,7 +4,7 @@ import { UpdateRestaurantDto } from './dtos/update-restaurant.dto';
 import { Restaurant } from './entities/restaurants.entity';
 import { RestaurantService } from './restaurants.service';
 
-@Resolver((of) => Restaurant)
+@Resolver(() => Restaurant)
 export class RestaurantsResolver {
   constructor(private readonly restaurantService: RestaurantService) {}
   @Query(() => [Restaurant])
