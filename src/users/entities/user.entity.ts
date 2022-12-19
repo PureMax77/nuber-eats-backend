@@ -5,7 +5,7 @@ import {
   registerEnumType,
 } from '@nestjs/graphql';
 import { CoreEntity } from 'src/common/entities/core.entity';
-import { BeforeInsert, Column, Entity } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { InternalServerErrorException } from '@nestjs/common';
 import { IsEmail, IsEnum } from 'class-validator';
@@ -29,7 +29,7 @@ export class User extends CoreEntity {
   @IsEmail()
   email: string;
 
-  @Column()
+  @Column({ select: false }) // select는 유저를 불러올때 해당 값도 같이 불러올지 여부인듯
   @Field(() => String)
   password: string;
 
@@ -41,13 +41,21 @@ export class User extends CoreEntity {
   @IsEnum(UserRole)
   role: UserRole;
 
+  @Field(() => Boolean)
+  @Column({ default: false })
+  verified: boolean;
+
   @BeforeInsert()
+  @BeforeUpdate()
   async hashPassword(): Promise<void> {
-    try {
-      this.password = await bcrypt.hash(this.password, 10);
-    } catch (e) {
-      console.log(e);
-      throw new InternalServerErrorException();
+    // 비밀번호 변경이 아닌경우 해싱을 방지하기 위해
+    if (this.password) {
+      try {
+        this.password = await bcrypt.hash(this.password, 10);
+      } catch (e) {
+        console.log(e);
+        throw new InternalServerErrorException();
+      }
     }
   }
 
