@@ -128,7 +128,7 @@ export class UserService {
     } catch (error) {
       return {
         ok: false,
-        error,
+        error: '사용자 정보를 업데이트 할 수 없습니다.',
       };
     }
   }
@@ -152,7 +152,7 @@ export class UserService {
       console.log(error);
       return {
         ok: false,
-        error,
+        error: 'Email을 인증할 수 없습니다.',
       };
     }
   }
