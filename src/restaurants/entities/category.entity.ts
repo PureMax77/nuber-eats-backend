@@ -9,15 +9,20 @@ import { Restaurant } from './restaurants.entity';
 @Entity() // for database
 export class Category extends CoreEntity {
   @Field(() => String) // for graphql
-  @Column() // for database
+  @Column({ unique: true }) // for database
   @IsString()
   @Length(5)
   name: string;
 
-  @Field(() => String)
-  @Column()
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
   @IsString()
   coverImg: string;
+
+  @Field(() => String)
+  @Column({ unique: true })
+  @IsString()
+  slug: string;
 
   @Field(() => [Restaurant])
   @OneToMany(() => Restaurant, (restaurant) => restaurant.category)

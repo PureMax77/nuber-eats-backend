@@ -12,17 +12,17 @@ import { IsBoolean, IsEmail, IsEnum, IsString } from 'class-validator';
 import { Restaurant } from 'src/restaurants/entities/restaurants.entity';
 
 // for database
-enum UserRole {
-  Client,
-  Owner,
-  Delivery,
+export enum UserRole {
+  Client = 'Client',
+  Owner = 'Owner',
+  Delivery = 'Delivery',
 }
 
 // for graphql
 registerEnumType(UserRole, { name: 'UserRole' });
 
-@Entity() // for database
 @InputType('UserInputType', { isAbstract: true }) // User를 기본적으로 아래 ObjectType으로 만들지만 다른곳에서 extend할때 InputType으로 복사도 허용해줌
+@Entity() // for database
 @ObjectType() // for graphql
 export class User extends CoreEntity {
   @Column() // 데이터 베이스에 동기화 되기 위한 부분
