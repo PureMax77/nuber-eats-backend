@@ -387,7 +387,9 @@ export class RestaurantService {
   async myRestaurants(owner: User): Promise<MyRestaurantOutput> {
     try {
       const restaurants = await this.restaurants.find({
-        where: { ownerId: owner.id },
+        where: {
+          owner: { id: owner.id },
+        },
       });
       return {
         restaurants,
