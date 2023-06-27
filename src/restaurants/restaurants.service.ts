@@ -396,6 +396,7 @@ export class RestaurantService {
     try {
       const restaurant = await this.restaurants.findOne({
         where: { id },
+        relations: ['menu'],
       });
       return {
         restaurant,
